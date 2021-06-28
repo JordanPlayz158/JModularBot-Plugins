@@ -1,0 +1,7 @@
+name: Unban
+version: ${project.version}
+description: This is a command for unbanning members functionality.
+authors: [JordanPlayz158]
+main: xyz.jordanplayz158.unbanplugin.UnbanPlugin
+depend: []
+softdepend: []
