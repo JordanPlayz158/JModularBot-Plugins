@@ -1,0 +1,7 @@
+name: Help
+version: ${project.version}
+description: This is a plugin for displaying all commands, descriptions and syntaxes.
+authors: [JordanPlayz158]
+main: xyz.jordanplayz158.helpplugin.HelpPlugin
+depend: []
+softdepend: []
