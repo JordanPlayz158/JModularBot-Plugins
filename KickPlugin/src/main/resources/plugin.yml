@@ -1,0 +1,7 @@
+name: Kick
+version: ${project.version}
+description: This is a command for kicking members functionality.
+authors: [JordanPlayz158]
+main: xyz.jordanplayz158.kickplugin.KickPlugin
+depend: []
+softdepend: []
