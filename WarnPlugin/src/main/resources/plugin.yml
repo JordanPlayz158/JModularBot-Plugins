@@ -1,0 +1,7 @@
+name: Warn
+version: ${project.version}
+description: This is a command for warning members.
+authors: [JordanPlayz158]
+main: xyz.jordanplayz158.warnplugin.WarnPlugin
+depend: []
+softdepend: []
