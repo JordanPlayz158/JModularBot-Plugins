@@ -1,0 +1,7 @@
+name: Unwarn
+version: ${project.version}
+description: This is a command for unwarning members.
+authors: [JordanPlayz158]
+main: xyz.jordanplayz158.unwarnplugin.UnwarnPlugin
+depend: []
+softdepend: []
