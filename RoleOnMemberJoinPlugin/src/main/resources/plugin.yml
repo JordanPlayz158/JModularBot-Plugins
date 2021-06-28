@@ -1,0 +1,7 @@
+name: RoleOnMemberJoin
+version: ${project.version}
+description: This is a listener for giving members roles when they join a guild.
+authors: [JordanPlayz158]
+main: xyz.jordanplayz158.roleonmemberjoinplugin.RoleOnMemberJoinPlugin
+depend: []
+softdepend: []
