@@ -1,0 +1,7 @@
+name: Mute
+version: ${project.version}
+description: This is a command for muting members functionality.
+authors: [JordanPlayz158]
+main: xyz.jordanplayz158.muteplugin.MutePlugin
+depend: []
+softdepend: []
