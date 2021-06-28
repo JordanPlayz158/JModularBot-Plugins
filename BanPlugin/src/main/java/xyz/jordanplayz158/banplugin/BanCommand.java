@@ -5,11 +5,13 @@ import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import xyz.jordanplayz158.jmodularbot.JModularBot;
 import xyz.jordanplayz158.jmodularbot.commands.Command;
 
 import java.awt.Color;
+import java.util.List;
 
 public class BanCommand extends Command {
     public BanCommand() {
@@ -30,18 +32,20 @@ public class BanCommand extends Command {
         }
 
         TextChannel channel = event.getTextChannel();
-        MessageEmbed invalidUser = JModularBot.getTemplate(event.getAuthor())
+        List<Member> mentionedMembers = event.getMessage().getMentionedMembers();
+        User user = event.getAuthor();
+        MessageEmbed invalidUser = JModularBot.getTemplate(user)
                 .setColor(Color.RED)
                 .setTitle("Ban Failed")
                 .setDescription("The user does not exist")
                 .build();
 
-        if(event.getMessage().getMentionedMembers().size() < 1) {
+        if(mentionedMembers.size() < 1) {
             channel.sendMessageEmbeds(invalidUser).queue();
             return;
         }
 
-        Member member = event.getMessage().getMentionedMembers().get(0);
+        Member member = mentionedMembers.get(0);
         StringBuilder reason = new StringBuilder();
 
         for (int i = 2; i < args.length; i++) {
@@ -55,16 +59,16 @@ public class BanCommand extends Command {
             return;
         }
 
-        channel.sendMessageEmbeds(JModularBot.getTemplate(event.getAuthor())
+        channel.sendMessageEmbeds(JModularBot.getTemplate(user)
                 .setColor(Color.GREEN)
                 .setTitle("Ban Successful")
                 .setDescription(MessageUtils.boldNameAndTag(member.getUser()) + " was banned")
                 .build()).queue();
 
-        event.getChannel().sendMessageEmbeds(JModularBot.getTemplate(event.getAuthor())
+        channel.sendMessageEmbeds(JModularBot.getTemplate(user)
                 .setColor(Color.YELLOW)
                 .setTitle("Log | Ban")
-                .setDescription(MessageUtils.boldNameAndTag(member.getUser()) + " was banned by " + MessageUtils.boldNameAndTag(event.getAuthor()) + " for \"" + reason + "\"")
+                .setDescription(MessageUtils.boldNameAndTag(member.getUser()) + " was banned by " + MessageUtils.boldNameAndTag(user) + " for \"" + reason + "\"")
                 .build()).queue();
     }
 }
