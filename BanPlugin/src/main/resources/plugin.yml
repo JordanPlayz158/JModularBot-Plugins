@@ -1,0 +1,7 @@
+name: Ban
+version: ${project.version}
+description: This is a command for banning members functionality.
+authors: [JordanPlayz158]
+main: xyz.jordanplayz158.banplugin.BanPlugin
+depend: []
+softdepend: []
