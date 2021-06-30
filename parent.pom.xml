@@ -30,6 +30,7 @@
             <groupId>xyz.jordanplayz158</groupId>
             <artifactId>JModularBot</artifactId>
             <version>0.0.5</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 </project>
