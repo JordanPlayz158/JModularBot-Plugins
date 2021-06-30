@@ -1,0 +1,4 @@
+# The role to give the person who is going to be muted
+muteRole: 0
+# The role that has the ability to mute
+staffRole: 0

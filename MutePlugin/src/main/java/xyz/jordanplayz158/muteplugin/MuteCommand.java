@@ -19,21 +19,21 @@ public class MuteCommand extends Command {
                 null,
                 "Mute a member of the discord (default 30 minute mute)",
                 null,
-                JModularBot.instance.getJda().getRoleById(JModularBot.instance.getConfig().getJson().get("hi").getAsLong()),
+                JModularBot.instance.getJda().getRoleById(MutePlugin.instance.getConfig().getStaffRole()),
                  "mute <user> <time>",
                 true,
                 false);
     }
 
     @Override
-    public void onCommand(MessageReceivedEvent event, String[] args) {
+    public boolean onCommand(MessageReceivedEvent event, String[] args) {
         Guild guild = event.getGuild();
         Member muteMember = Objects.requireNonNull(guild.getMember(MessageUtils.extractMention(args[1])));
         JModularBot instance = JModularBot.instance;
-        Role muteRole = Objects.requireNonNull(instance.getJda().getRoleById(instance.getConfig().getJson().get("hi").getAsLong()));
+        Role muteRole = Objects.requireNonNull(instance.getJda().getRoleById(MutePlugin.instance.getConfig().getMuteRole()));
 
         if(args.length < 3) {
-            return;
+            return false;
         }
 
         String delay = args[2];
@@ -51,7 +51,7 @@ public class MuteCommand extends Command {
         Executors.newScheduledThreadPool(1).schedule(() -> guild.removeRoleFromMember(muteMember, muteRole).queue(),
                 Long.parseLong(delay.substring(0, delay.length() - 1)),
                 getTimeUnit(delay));
-
+        return true;
     }
 
     public TimeUnit getTimeUnit(String time) {
