@@ -1,0 +1,5 @@
+# This role has access to warn people
+staffRole: 0
+# This is the time (in minutes) saving occurs (0 is not an option)
+# (ex. 5, saves the warns to file every 5 minutes)
+autosave: 5

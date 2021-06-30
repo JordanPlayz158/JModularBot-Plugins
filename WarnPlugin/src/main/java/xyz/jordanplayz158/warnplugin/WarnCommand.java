@@ -2,8 +2,6 @@ package xyz.jordanplayz158.warnplugin;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonObject;
-import me.jordanplayz158.utils.LoadJson;
 import me.jordanplayz158.utils.MessageUtils;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.MessageChannel;
@@ -13,10 +11,13 @@ import xyz.jordanplayz158.jmodularbot.JModularBot;
 import xyz.jordanplayz158.jmodularbot.commands.Command;
 
 import java.awt.Color;
+import java.io.File;
 import java.io.IOException;
-import java.io.Writer;
+import java.io.Reader;
 import java.nio.file.Files;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 public class WarnCommand extends Command {
@@ -25,75 +26,55 @@ public class WarnCommand extends Command {
                 null,
                 "Warn a member on the server.",
                 null,
-                JModularBot.instance.getJda().getRoleById(JModularBot.instance.getConfig().getJson().get("hi").getAsLong()),
+                JModularBot.instance.getJda().getRoleById(WarnPlugin.instance.getConfig().getStaffRole()),
                 "warn <user> <reason>",
                 true,
                 false);
+
+        try {
+            File warnsFile = WarnPlugin.instance.getWarnsFile();
+
+            if(Files.size(warnsFile.toPath()) != 0) {
+                Reader reader = Files.newBufferedReader(warnsFile.toPath());
+
+                final Gson gson = new GsonBuilder().setPrettyPrinting().create();
+                WarnPlugin.instance.setWarns(gson.fromJson(reader, Map.class));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
-    public void onCommand(MessageReceivedEvent event, String[] args) {
+    public boolean onCommand(MessageReceivedEvent event, String[] args) {
         List<Member> mentionedMembers = event.getMessage().getMentionedMembers();
+
+        if(args.length < 3 || mentionedMembers.size() == 0) {
+            return false;
+        }
+
         MessageChannel channel = event.getChannel();
         User author = event.getAuthor();
-
-        // Checking preconditions
-        if(mentionedMembers.size() == 0) {
-            channel.sendMessageEmbeds(JModularBot.getTemplate(author)
-                    .setColor(Color.RED)
-                    .setTitle("Warn Error")
-                    .setDescription("There is no mentioned member in the warn")
-                    .build()
-            ).queue();
-            return;
-        }
-
-        if(args.length < 3) {
-            return;
-        }
 
         Member warnMember = mentionedMembers.get(0);
 
         // 1. Make a UUID for the warn
-        UUID uuid = UUID.randomUUID();
-
-        StringBuilder reason = new StringBuilder(args[2]);
-
-        for(int i = 3; i < args.length; i++) {
-            reason.append(" ").append(args[i]);
-        }
-
-        // 2. Grab the data in data/warns then save the UUID to the data/warns.json file
-        JsonObject json = LoadJson.linkedTreeMap(WarnPlugin.instance.getWarnsFile());
-
+        String uuid = UUID.randomUUID().toString();
         String warnMemberId = warnMember.getId();
 
-        if(!json.has(warnMemberId)) {
-            json.add(warnMemberId, new JsonObject());
-        }
+        String reason = getReason(args);
 
-        JsonObject userWarns = json.getAsJsonObject(warnMemberId);
-        String uuidString = uuid.toString();
-        userWarns.addProperty(uuidString, reason.toString());
+        Map<String, List<Warn>> warns = WarnPlugin.instance.getWarns();
 
-        final Gson gson = new GsonBuilder().setPrettyPrinting().create();
-
-        try {
-            Writer writer = Files.newBufferedWriter(WarnPlugin.instance.getWarnsFile().toPath());
-
-            gson.toJson(json, writer);
-
-            writer.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        warns.putIfAbsent(warnMemberId, new ArrayList<>());
+        warns.get(warnMemberId).add(new Warn(uuid, reason));
 
         // 3. Send warn message
         channel.sendMessageEmbeds(JModularBot.getTemplate(author)
                 .setColor(Color.GREEN)
                 .setTitle("Warn Successful")
                 .setDescription(warnMember.getAsMention() + " has been warned")
-                .addField("ID", uuidString, false)
+                .addField("ID", uuid, false)
                 .build()
         ).queue();
 
@@ -103,5 +84,17 @@ public class WarnCommand extends Command {
                 .setTitle("Log | Warn")
                 .setDescription(MessageUtils.boldNameAndTag(warnMember.getUser()) + " was warned by " + MessageUtils.boldNameAndTag(author) + " for " + reason)
                 .build()).queue();
+
+        return true;
+    }
+
+    private static String getReason(String[] args) {
+        StringBuilder reason = new StringBuilder(args[2]);
+
+        for(int i = 3; i < args.length; i++) {
+            reason.append(" ").append(args[i]);
+        }
+
+        return reason.toString();
     }
 }
