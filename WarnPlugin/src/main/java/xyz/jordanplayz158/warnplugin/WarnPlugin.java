@@ -8,7 +8,6 @@ import xyz.jordanplayz158.jmodularbot.managers.EventManager;
 import xyz.jordanplayz158.jmodularbot.plugin.Plugin;
 
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
