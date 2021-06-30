@@ -2,14 +2,13 @@ package xyz.jordanplayz158.unbanplugin;
 
 import me.jordanplayz158.utils.MessageUtils;
 import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import xyz.jordanplayz158.jmodularbot.JModularBot;
 import xyz.jordanplayz158.jmodularbot.commands.Command;
 
-import java.awt.Color;
+import java.awt.*;
 
 public class UnbanCommand extends Command {
     public UnbanCommand() {
