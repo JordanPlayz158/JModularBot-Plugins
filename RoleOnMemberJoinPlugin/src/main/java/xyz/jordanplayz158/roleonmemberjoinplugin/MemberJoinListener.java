@@ -11,7 +11,7 @@ public class MemberJoinListener extends ListenerAdapter {
     public void onGuildMemberJoin(@NotNull GuildMemberJoinEvent event) {
         event.getGuild().addRoleToMember(
                 event.getMember(),
-                Objects.requireNonNull(event.getGuild().getRoleById(780073237743665213L))
+                Objects.requireNonNull(event.getGuild().getRoleById(RoleOnMemberJoinPlugin.instance.getConfig().getRole()))
         ).queue();
     }
 }
