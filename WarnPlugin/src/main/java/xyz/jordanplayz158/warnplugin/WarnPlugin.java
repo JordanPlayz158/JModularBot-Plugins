@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.Setter;
 import xyz.jordanplayz158.jmodularbot.managers.EventManager;
 import xyz.jordanplayz158.jmodularbot.plugin.Plugin;
+import xyz.jordanplayz158.jmodularbot.plugin.PluginBase;
+import xyz.jordanplayz158.jmodularbot.plugin.java.JavaPlugin;
 
 import java.io.File;
 import java.io.IOException;
@@ -17,7 +19,7 @@ import java.util.Map;
 import java.util.Objects;
 
 @Getter
-public class WarnPlugin extends Plugin {
+public class WarnPlugin extends JavaPlugin {
     public static WarnPlugin instance;
     private File warnsFile;
     private Config config;

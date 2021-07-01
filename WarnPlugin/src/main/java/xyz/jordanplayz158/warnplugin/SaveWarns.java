@@ -2,6 +2,9 @@ package xyz.jordanplayz158.warnplugin;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import xyz.jordanplayz158.jmodularbot.JModularBot;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -12,15 +15,16 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class SaveWarns extends TimerTask {
-    private final Timer timer = new Timer();
     private final Gson gson = new GsonBuilder().setPrettyPrinting().create();
-    private int map = -1;
+    private final Logger LOGGER = LoggerFactory.getLogger(SaveWarns.class);
+    private int hashCode = -1;
 
     public SaveWarns(int minutes) {
         if(minutes <= 0) {
             minutes = 5;
         }
 
+        final Timer timer = new Timer();
         timer.scheduleAtFixedRate(this, 0, minutes * 60 * 1000L);
     }
 
@@ -28,7 +32,9 @@ public class SaveWarns extends TimerTask {
     public void run() {
         Map<String, List<Warn>> warns = WarnPlugin.instance.getWarns();
 
-        if(warns.size() == map) {
+        LOGGER.debug("Current HashCode: " + warns.hashCode());
+        LOGGER.debug("Saved HashCode: " + hashCode);
+        if(warns.hashCode() == hashCode) {
             return;
         }
 
@@ -42,6 +48,6 @@ public class SaveWarns extends TimerTask {
             e.printStackTrace();
         }
 
-        map = warns.size();
+        hashCode = warns.hashCode();
     }
 }
