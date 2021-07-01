@@ -1,17 +1,13 @@
 package xyz.jordanplayz158.unwarnplugin;
 
-import lombok.Getter;
 import xyz.jordanplayz158.jmodularbot.managers.EventManager;
-import xyz.jordanplayz158.jmodularbot.plugin.Plugin;
+import xyz.jordanplayz158.jmodularbot.plugin.java.JavaPlugin;
 
-import java.io.File;
-
-public class UnwarnPlugin extends Plugin {
+public class UnwarnPlugin extends JavaPlugin {
     public static UnwarnPlugin instance;
-    @Getter
-    private final File warnsFile = new File(getDataFolder(), "warns.json");
 
-    public UnwarnPlugin() {
+    @Override
+    public void onEnable() {
         instance = this;
         EventManager.addEvents(this, new ReadyListener());
     }

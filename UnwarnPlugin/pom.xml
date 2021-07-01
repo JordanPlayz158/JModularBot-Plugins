@@ -13,4 +13,13 @@
     <artifactId>UnwarnPlugin</artifactId>
     <version>0.0.1</version>
     <packaging>jar</packaging>
+
+    <dependencies>
+        <dependency>
+            <groupId>xyz.jordanplayz158</groupId>
+            <artifactId>WarnPlugin</artifactId>
+            <version>0.0.1</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
 </project>
