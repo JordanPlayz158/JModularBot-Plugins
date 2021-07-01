@@ -2,6 +2,7 @@ package xyz.jordanplayz158.unbanplugin;
 
 import me.jordanplayz158.utils.MessageUtils;
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
@@ -15,15 +16,15 @@ public class UnbanCommand extends Command {
         super("unban",
                 null,
                 "Unban a member from the guild!",
+                Permission.BAN_MEMBERS,
                 null,
-                JModularBot.instance.getJda().getRoleById(JModularBot.instance.getConfig().getJson().get("hi").getAsLong()),
                 "unban <user> [reason]",
                 true,
                 false);
     }
 
     @Override
-    public void onCommand(MessageReceivedEvent event, String[] args) {
+    public boolean onCommand(MessageReceivedEvent event, String[] args) {
         StringBuilder reason = null;
 
         if(args.length > 2) {
@@ -67,5 +68,7 @@ public class UnbanCommand extends Command {
             if(errorCode == 10026)
                 channel.sendMessageEmbeds(JModularBot.getTemplate(author).setColor(Color.RED).setTitle("Unban Unsuccessful").setDescription("The user is not banned!").build()).queue();
         });
+
+        return true;
     }
 }

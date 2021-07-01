@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import lombok.Getter;
 import xyz.jordanplayz158.jmodularbot.managers.EventManager;
-import xyz.jordanplayz158.jmodularbot.plugin.Plugin;
+import xyz.jordanplayz158.jmodularbot.plugin.java.JavaPlugin;
 
 import java.io.File;
 import java.io.IOException;
@@ -12,7 +12,7 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.util.Objects;
 
-public class MutePlugin extends Plugin {
+public class MutePlugin extends JavaPlugin {
     public static MutePlugin instance;
     @Getter
     private Config config;
@@ -37,7 +37,4 @@ public class MutePlugin extends Plugin {
 
         EventManager.addEvents(this, new ReadyListener());
     }
-
-    @Override
-    public void onDisable() {}
 }

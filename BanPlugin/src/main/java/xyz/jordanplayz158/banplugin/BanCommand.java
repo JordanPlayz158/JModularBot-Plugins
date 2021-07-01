@@ -26,9 +26,9 @@ public class BanCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageReceivedEvent event, String[] args) {
+    public boolean onCommand(MessageReceivedEvent event, String[] args) {
         if (args.length < 3) {
-            return;
+            return false;
         }
 
         TextChannel channel = event.getTextChannel();
@@ -42,7 +42,7 @@ public class BanCommand extends Command {
 
         if(mentionedMembers.size() < 1) {
             channel.sendMessageEmbeds(invalidUser).queue();
-            return;
+            return true;
         }
 
         Member member = mentionedMembers.get(0);
@@ -56,7 +56,7 @@ public class BanCommand extends Command {
             event.getGuild().ban(member, 0).reason(reason.toString()).queue();
         } catch (Exception e) {
             channel.sendMessageEmbeds(invalidUser).queue();
-            return;
+            return true;
         }
 
         channel.sendMessageEmbeds(JModularBot.getTemplate(user)
@@ -70,5 +70,7 @@ public class BanCommand extends Command {
                 .setTitle("Log | Ban")
                 .setDescription(MessageUtils.boldNameAndTag(member.getUser()) + " was banned by " + MessageUtils.boldNameAndTag(user) + " for \"" + reason + "\"")
                 .build()).queue();
+
+        return true;
     }
 }

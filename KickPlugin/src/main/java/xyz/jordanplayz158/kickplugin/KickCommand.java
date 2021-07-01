@@ -24,9 +24,9 @@ public class KickCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageReceivedEvent event, String[] args) {
+    public boolean onCommand(MessageReceivedEvent event, String[] args) {
         if (args.length < 3)
-            return;
+            return false;
 
         Member kickedMember = event.getMessage().getMentionedMembers().get(0);
         StringBuilder reason = new StringBuilder();
@@ -56,5 +56,7 @@ public class KickCommand extends Command {
                 .setTitle("Kick Failed")
                 .setDescription("The kick didn't execute correctly, Please check console for details!")
                 .build()).queue());
+
+        return true;
     }
 }

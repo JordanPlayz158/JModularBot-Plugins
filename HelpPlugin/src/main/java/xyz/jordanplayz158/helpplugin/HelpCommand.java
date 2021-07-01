@@ -26,7 +26,7 @@ public class HelpCommand extends Command {
     }
 
     @Override
-    public void onCommand(MessageReceivedEvent event, String[] args) {
+    public boolean onCommand(MessageReceivedEvent event, String[] args) {
         EmbedBuilder embed = JModularBot.getTemplate(event.getAuthor())
                 .setColor(Color.YELLOW)
                 .setTitle("Help");
@@ -48,6 +48,7 @@ public class HelpCommand extends Command {
         }
 
         event.getChannel().sendMessageEmbeds(embed.build()).queue();
+        return true;
     }
 
     private boolean permissionCheck(Member executor, Command command) {

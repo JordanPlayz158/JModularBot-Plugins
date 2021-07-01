@@ -1,12 +1,13 @@
 package xyz.jordanplayz158.banplugin;
 
 import xyz.jordanplayz158.jmodularbot.managers.EventManager;
-import xyz.jordanplayz158.jmodularbot.plugin.Plugin;
+import xyz.jordanplayz158.jmodularbot.plugin.java.JavaPlugin;
 
-public class BanPlugin extends Plugin {
+public class BanPlugin extends JavaPlugin {
     public static BanPlugin instance;
 
-    public BanPlugin() {
+    @Override
+    public void onEnable() {
         instance = this;
         EventManager.addEvents(this, new ReadyListener());
     }
