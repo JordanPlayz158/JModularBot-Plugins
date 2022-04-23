@@ -1,0 +1,1 @@
+In honor of my good friend Incog/Vital who loves OSS (![Troll Picture](https://cdn.discordapp.com/emojis/516803307147100182.webp?quality=lossless)) and loves to delete his messages on discord

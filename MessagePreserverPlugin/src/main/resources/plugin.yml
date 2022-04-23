@@ -1,0 +1,7 @@
+name: MessagePreserver
+version: ${project.version}
+description: This is a plugin for logging messages in public chat in the same order and time they were sent, useful for people who purge their messages after talking.
+authors: [JordanPlayz158]
+main: xyz.jordanplayz158.messagepreserverplugin.MessagePreserverPlugin
+depend: []
+softdepend: []
